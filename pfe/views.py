@@ -83,10 +83,17 @@ def client_history(request, pk):
     history = client.history.all().order_by('-history_date')
     history_list = []
     for record in history:
+        previous_etat = None
+        if record.prev_record:
+            previous_etat = record.prev_record.etat
+        else:
+            previous_etat = "Non Traité" 
+
         history_list.append({
-            "date": record.history_date.strftime("%Y-%m-%d"),  
-            "previous_etat": record.prev_record.etat if record.prev_record else None,
+            "date": record.history_date.strftime("%Y-%m-%d"),
+            "previous_etat": previous_etat,
             "new_etat": record.etat,
         })
 
     return Response(history_list)
+
