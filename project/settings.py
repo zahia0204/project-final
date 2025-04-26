@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'pfe',
     'rest_framework_simplejwt.token_blacklist',
+    'simple_history',
 
 
 ]
@@ -132,8 +133,6 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  
 ]
-
-
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),

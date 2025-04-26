@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser 
+from simple_history.models import HistoricalRecords
 
 class User(AbstractUser):
     ROLE_CHOICES = [
@@ -53,16 +54,23 @@ class Client(models.Model):
     employee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="clients")
     etat = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Non Traité")
 
+
+    history = HistoricalRecords()
+
     def save(self, *args, **kwargs):
         if self.pk:  
-            old_client = Client.objects.get(pk=self.pk)
-            if old_client.etat != self.etat:
-                DateChange.objects.create(
-                    client=self,
-                    previous_etat=old_client.etat,
-                    new_etat=self.etat,
-                )
+            try:
+                old_client = Client.objects.get(pk=self.pk)
+                if old_client.etat != self.etat:
+                    DateChange.objects.create(
+                        client=self,
+                        previous_etat=old_client.etat,
+                        new_etat=self.etat,
+                    )
+            except Client.DoesNotExist:
+                pass  
         super().save(*args, **kwargs)
+
 
     def __str__(self):
         return f"{self.name} {self.surname} - {self.etat}"

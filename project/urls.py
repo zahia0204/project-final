@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from django.contrib import admin
 from pfe.views import (
     UserViewSet, ClientViewSet, FactureViewSet, 
-    DateChangeViewSet, MyTokenObtainPairView
+    DateChangeViewSet, MyTokenObtainPairView , client_history
 )
 from rest_framework_simplejwt.views import TokenRefreshView
 from project.api.views import get_routes
@@ -20,5 +20,6 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(router.urls)),
+    path('api/clients/<int:pk>/history/', client_history),
     path('generate-pdf/<int:client_id>/', views.generate_pdf, name='generate_pdf'),
 ]

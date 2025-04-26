@@ -7,6 +7,7 @@ from .serializers import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
 from rest_framework.decorators import action
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.template.loader import render_to_string
 from django.http import HttpResponse
@@ -70,3 +71,22 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
+from datetime import datetime
+
+@api_view(['GET'])
+def client_history(request, pk):
+    try:
+        client = Client.objects.get(pk=pk)
+    except Client.DoesNotExist:
+        return Response({"error": "Client not found"}, status=404)
+
+    history = client.history.all().order_by('-history_date')
+    history_list = []
+    for record in history:
+        history_list.append({
+            "date": record.history_date.strftime("%Y-%m-%d"),  
+            "previous_etat": record.prev_record.etat if record.prev_record else None,
+            "new_etat": record.etat,
+        })
+
+    return Response(history_list)
