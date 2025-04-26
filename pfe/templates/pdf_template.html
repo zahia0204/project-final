@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @page {
+    size: A4; 
+    margin: 0; 
+}
+    body {
+      font-family: "Arabic Transparent", "Arial", sans-serif;
+      font-size: 14pt;
+      direction: rtl;
+      margin: 40px;
+      line-height: 1.6;
+    }
+
+    .header {
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    .title {
+      font-size: 20pt;
+    }
+
+    .sub {
+      font-size: 14pt;
+    }
+
+    .section {
+      margin: 10pt 0;
+      text-align: justify;
+    }
+
+    .highlight {
+      font-weight: bold;
+    }
+
+    .note {
+      font-family: Arial, sans-serif;
+      font-size: 12pt;
+    }
+    .logo-container  img{
+        width: 200px;
+        height: 100px; 
+        margin: 0 auto; 
+        display: block;
+    }
+    .logo-container {
+        text-align: center; 
+        margin-bottom: 20px; 
+    }
+        
+  
+
+  </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ logo_url }}" alt="Logo">
+      </div>
+  <p class="header title">&nbsp;&nbsp;&nbsp;المديرية العملية للاتصالات الجزائر البليدة</p>
+  <p class="header sub">&nbsp;&nbsp;&nbsp;مصلحة التحصيل&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; البليدة في : {{ today_date }}</p>
+  <p class="header">&nbsp;&nbsp;&nbsp;المرجع / م ت / رقم / {{ ref_number }}/{{ year }}</p>
+
+  <div class="section">
+    <p>إلى السيـــد(ة): <strong>{{ name }} {{ surname }}</strong></p>
+    <p><strong>{{ address }}</strong></p>
+  </div>
+
+  <div class="section">
+    <p><strong>       الموضوع : أخــر اعــذار قبـــل المتابــعة القضائـية.     </strong></p>
+  </div>
+<div class="section">
+    <b>إلى السيد(ة) المحترم(ة)،</b>
+  </div>
+    
+</div>
+  <div class="section">
+    <p>
+     باستثناء الخطأ أو الإغفال من جانبنا، يؤسفنا أن نتقدم إليكم باخر اعذار قبل المتابعة القضائية
+      وذلك بعد عدم استجابتكم لإرسالاتنا السابقة والمتعلقة  <strong>بتسوية قيمة الدين العالق في ذمتكم المتعلق بالرقم
+      {{ client_id }} (الموقف) والمقدر بـ {{ total }} دج.</strong>
+    </p>
+    <p>رقم الزبون: <strong>{{ phone }}</strong></p>
+    <p>
+      اتصالات الجزائر تدعوكم إلى التقرب من مصلحة التحصيل الكائن مقرها بالمديرية الـعملية لاتصالات الجزائر البليدة
+      بالطريق الوطني رقم 29 أولاد يعيش،<strong> من أجل تسديد قيمة الدين وذلك في أجل أقصاه <u>08 أيام</u> من تاريخ استلام الاعذار الحالي.</strong>
+    </p>
+    <p>
+      وتعلمكم أنها مستعدة لمنحكم تسهيلات من أجل ذلك بمنحكم جدول الدفع بالتقسيط في حالة تعذر عليكم الدفع الكامل لقيمة الدين.
+    </p>
+    <p>
+     <strong> وعليه/ </strong> تحيطكم اتصالات الجزائر علماً، أنه في حالة عدم استجابتكم لذلك في الأجل المحدد لكم، ستتخذ كافة الإجراءات القانونية
+      لاستيفاء قيمة الدين العالق في ذمتكم عن طريق القضاء مع احتفاظها بحق المطالبة بالتعويض، إضافة إلى تسديد جميع المصاريف المدفوعة من قبلها لاستيفاء قيمة الدين.
+    </p>
+    <p><strong>في انتظار ردكم الإيجابي، تقبلوا منا فائق التقدير والاحترام.</strong></p>
+  </div>
+
+  <div class="section note">
+    <strong><u>ملاحظة:</u></strong> في حالة ما إن كنتم قد سددتم قيمة الدين قبل تلقي الإرسال الحالي، يرجى منكم التقدم من مصالحنا لتبرير ذلك واعتبار الإعذار الحالي كأن لم يكن.
+  </div>
+
+</body>
+</html>

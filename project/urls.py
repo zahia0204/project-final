@@ -7,10 +7,10 @@ from pfe.views import (
 )
 from rest_framework_simplejwt.views import TokenRefreshView
 from project.api.views import get_routes
-
+from pfe import views 
 router = DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'clients', ClientViewSet, basename='client')  # ✅ basename added here!
+router.register(r'clients', ClientViewSet, basename='client')  
 router.register(r'factures', FactureViewSet)
 router.register(r'datechanges', DateChangeViewSet)
 
@@ -20,4 +20,5 @@ urlpatterns = [
     path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/', include(router.urls)),
+    path('generate-pdf/<int:client_id>/', views.generate_pdf, name='generate_pdf'),
 ]
