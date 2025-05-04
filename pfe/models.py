@@ -25,14 +25,14 @@ class Client(models.Model):
         ("Residential", "Residential"),
     ]
     STATUS_CHOICES = [
-        ("Non Traité", "Non Traité"),
-        ("Décédé", "Décédé"),
-        ("Avocat", "Avocat"),
-        ("Huissier", "Huissier"),
-        ("Juridique", "Juridique"),
-        ("En Cours", "En Cours"),
-        ("Payment Réglé", "Payment Réglé"),
-    ]
+    ("Non Traité", "Non Traité"),
+    ("Décédé", "Décédé"),
+    ("Avocat", "Avocat"),
+    ("Huissier", "Huissier"),
+    ("Juridique", "Juridique"),
+    ("Paiement en cours", "Paiement en cours"),  # Remove "En Cours"
+    ("Payment Réglé", "Payment Réglé"),
+]
     REGION_CHOICES = [
         ("Boufarik", "Boufarik"),
         ("Mouzaia", "Mouzaia"),

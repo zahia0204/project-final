@@ -22,4 +22,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/clients/<int:pk>/history/', client_history),
     path('generate-pdf/<int:client_id>/', views.generate_pdf, name='generate_pdf'),
+    path('api/client-stats/', views.client_stats, name='client_stats'),
+
+    
 ]
