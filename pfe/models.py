@@ -30,7 +30,7 @@ class Client(models.Model):
     ("Avocat", "Avocat"),
     ("Huissier", "Huissier"),
     ("Juridique", "Juridique"),
-    ("Paiement en cours", "Paiement en cours"),  # Remove "En Cours"
+    ("Paiement en cours", "Paiement en cours"),  
     ("Payment Réglé", "Payment Réglé"),
 ]
     REGION_CHOICES = [
