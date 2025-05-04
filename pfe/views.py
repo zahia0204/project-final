@@ -19,7 +19,7 @@ from .serializers import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-
+# ------------------------ Generate PDF ------------------------
 def generate_pdf(request, client_id):
     client = get_object_or_404(Client, id=client_id)
     logo_url = request.build_absolute_uri('/static/images/pix.png')
@@ -43,7 +43,7 @@ def generate_pdf(request, client_id):
     response['Content-Disposition'] = 'inline; filename="client_warning.pdf"'
     return response
 
-
+# ------------------------ ViewSets ------------------------
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -72,7 +72,7 @@ class DateChangeViewSet(viewsets.ModelViewSet):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-
+# ------------------------ Historique Client ------------------------
 @api_view(['GET'])
 def client_history(request, pk):
     try:
@@ -92,8 +92,11 @@ def client_history(request, pk):
 
     return Response(history_list)
 
+# ------------------------ Dashboard Stats ------------------------
+# views.py (Django)
 
-import calendar
+# Endpoint for client statistics
+
 
 @api_view(['GET'])
 def client_stats(request):
@@ -116,7 +119,7 @@ def client_stats(request):
         "Décédé": clients_decede
     }
 
-
+    # Monthly stats
     changes = DateChange.objects.all()
     regle_changes = changes.filter(new_etat="Payment Réglé").annotate(month=TruncMonth("changed_at")).values("month").annotate(count=Count("id"))
     en_cours_changes = changes.filter(new_etat__in=["Paiement en cours", "En Cours"]).annotate(month=TruncMonth("changed_at")).values("month").annotate(count=Count("id"))
