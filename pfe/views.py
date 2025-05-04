@@ -19,7 +19,6 @@ from .serializers import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-# ------------------------ Generate PDF ------------------------
 def generate_pdf(request, client_id):
     client = get_object_or_404(Client, id=client_id)
     logo_url = request.build_absolute_uri('/static/images/pix.png')
@@ -43,7 +42,6 @@ def generate_pdf(request, client_id):
     response['Content-Disposition'] = 'inline; filename="client_warning.pdf"'
     return response
 
-# ------------------------ ViewSets ------------------------
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -71,8 +69,6 @@ class DateChangeViewSet(viewsets.ModelViewSet):
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
-# ------------------------ Historique Client ------------------------
 @api_view(['GET'])
 def client_history(request, pk):
     try:
@@ -92,10 +88,6 @@ def client_history(request, pk):
 
     return Response(history_list)
 
-# ------------------------ Dashboard Stats ------------------------
-# views.py (Django)
-
-# Endpoint for client statistics
 import calendar
 
 @api_view(['GET'])
