@@ -1,9 +1,14 @@
 from rest_framework import viewsets, status
+from rest_framework.views import APIView
+from rest_framework.parsers import MultiPartParser
 from rest_framework.decorators import action, api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from django.template.loader import render_to_string
 from django.http import HttpResponse
+from .resources import ClientResource
+from tablib import Dataset
+from import_export.formats.base_formats import XLSX
 from weasyprint import HTML
 from datetime import datetime
 from django.db.models.functions import TruncMonth
@@ -20,6 +25,28 @@ from .serializers import (
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 # ------------------------ Generate PDF ------------------------
+""" def generate_pdf(request, client_id):
+    client = get_object_or_404(Client, id=client_id)
+    logo_url = request.build_absolute_uri('/static/images/pix.png')
+
+    html_content = render_to_string("pdf_template.html", {
+        "name": client.name,
+        "surname": client.surname,
+        "address": client.address,
+        "client_id": client.client_id,
+        "total": client.total_amount,
+        "phone": client.phone_number,
+        "today_date": datetime.today().strftime('%Y-%m-%d'),
+        "ref_number": "05",
+        "year": "2024",
+        'logo_url': logo_url
+    })
+
+    pdf_file = HTML(string=html_content).write_pdf()
+
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="client_warning.pdf"'
+    return response """
 def generate_pdf(request, client_id):
     client = get_object_or_404(Client, id=client_id)
     logo_url = request.build_absolute_uri('/static/images/pix.png')
@@ -72,7 +99,6 @@ class DateChangeViewSet(viewsets.ModelViewSet):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-# ------------------------ Historique Client ------------------------
 @api_view(['GET'])
 def client_history(request, pk):
     try:
@@ -92,10 +118,7 @@ def client_history(request, pk):
 
     return Response(history_list)
 
-# ------------------------ Dashboard Stats ------------------------
-# views.py (Django)
 
-# Endpoint for client statistics
 
 
 @api_view(['GET'])
@@ -149,3 +172,28 @@ def client_stats(request):
             "en_cours": en_cours_counts
         }
     })
+
+
+class ClientImportView(APIView):
+    def post(self, request, *args, **kwargs):
+        file = request.FILES.get('file')
+
+        if not file:
+            return Response({'error': 'Aucun fichier reçu.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Lecture du fichier binaire
+        dataset = Dataset()
+        xlsx_format = XLSX()
+        data = file.read()
+
+        try:
+            # Charger le contenu du fichier dans un dataset
+            dataset.load(data, format='xlsx')
+
+            # Importer avec la resource
+            resource = ClientResource()
+            result = resource.import_data(dataset, dry_run=False, raise_errors=True)
+            return Response({'success': True, 'imported': len(result.rows)}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

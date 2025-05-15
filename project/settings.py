@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'pfe',
     'rest_framework_simplejwt.token_blacklist',
     'simple_history',
+     'import_export',
 
 
 ]

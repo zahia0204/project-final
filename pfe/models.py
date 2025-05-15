@@ -50,7 +50,7 @@ class Client(models.Model):
     region = models.CharField(max_length=50, choices=REGION_CHOICES)
     address = models.TextField(max_length=255, default="Unknown")
     observation = models.TextField(null=True, blank=True)
-    total_amount = models.DecimalField(max_digits=15, decimal_places=2)
+    total_amount = models.DecimalField(max_digits=15, decimal_places=2, blank=True, null=True)
     employee = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True, related_name="clients")
     etat = models.CharField(max_length=20, choices=STATUS_CHOICES, default="Non Traité")
 
