@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr-FR" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تعهد بدفع الديون الهاتفية</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      font-size: 20px;
+    font-weight: bold;
+      direction: rtl;
+      margin: 20px;
+    }
+
+    img {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin: 8px 0;
+    }
+
+    p[dir="ltr"] {
+      direction: ltr;
+      text-align: left;
+    }
+
+
+    strong {
+      font-weight: bold;
+    }
+
+    .centered-title {
+      font-weight: bold;
+      font-size: 24px;
+      text-align: center;
+     margin-top: 60px;
+     margin-bottom: 60px;
+    }
+
+    .reference-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .signature-line {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 60px;
+      font-weight: bold;
+      padding: 0 20px;
+    }
+        .signatture-line {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .header-line {
+      text-align: left;
+      size: 12px;
+      direction: ltr;
+      font-style: italic;
+    }
+.img {
+      display: flex;
+     flex-direction: column;
+      margin: 0 auto;
+    }
+    .section {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <p>
+      <img class="img" src="{{ logo_url }}" width="227" height="47" alt="Logo" />
+    </p>
+    <p class="header-line"><b>Algerie Telecom EPE/SPA RC 02B18083/</b></p>
+    <p class="header-line"><b>Le capital social/115 000 000 000.00 DA/</b></p>
+    <p class="header-line"><b>Le siège social/route nationale n°05, cinq maisons, Mohammadia 16200, ALGER</b></p>
+
+    <p class="header-line">.............................................................................................................</p>
+    <p class="header-line">...............................</p>
+
+    <p class="section">
+      مصلحة التــــــحصيل </p>
+  <div class="signatture-line">
+    <p>
+     <span dir="ltr"> </span> المرجع / م ع ا ج /م ت /
+      {{ ref }} البليدة {{ year }}</span>
+      </p>
+      <p>
+     <span dir="ltr"></span> البلـــــيدة
+      {{ today_date }}</span>
+    </p>
+</div>
+    <p class="centered-title">تعهــــــد بــدفـــع الديون الهاتفية</p>
+
+    <p class="section">
+      &nbsp;&nbsp;&nbsp;
+      أنا الممضي أسفله السيد  
+      <span dir="ltr">{{ name }} {{ surname }}</span>
+      الحامل لبطاقة التعريف رقم 
+      <span dir="ltr">{{ id_number }}</span> الصادرة بتاريخ 
+      <span dir="ltr">{{ id_date }}</span>
+      بـ 
+      <span dir="ltr">{{ id_place }}</span>، رقم الهاتف   
+      <span dir="ltr">{{ phone_number }}</span>
+      بدين قدره 
+      <span dir="ltr">{{ total }}</span> دج على أقساط 
+      <span dir="ltr">{{ payment }}</span> دج كل شهر.
+    </p>
+<br>
+<br><br>
+    <p class="section">
+      رقم الزبون : <span dir="ltr">{{ phone_number }}</span>
+    </p>
+
+    <p class="section">
+      رقم الهاتف الشخصي للزبون : 
+      <span dir="ltr">{{ personal_phone }}</span>
+    </p>
+<br><br><br>
+    <div class="signature-line">
+      <span dir="rtl">إمضاء المصلحة</span>
+      <span dir="ltr">إمضاء الزبون</span>
+    </div>
+  </div>
+</body>
+</html>

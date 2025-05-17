@@ -15,7 +15,6 @@ from django.db.models.functions import TruncMonth
 from django.db.models import Count
 from collections import defaultdict
 import calendar
-
 from .models import User, Client, Facture, DateChange
 from .serializers import (
     UserSerializer, ClientSerializer,
@@ -23,6 +22,38 @@ from .serializers import (
     MyTokenObtainPairSerializer
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
+
+def generate_pdftwo(request, client_id):
+    client = get_object_or_404(Client, id=client_id)
+    logo_url = request.build_absolute_uri('/static/images/pix.png')
+
+    html_content = render_to_string("pdftwo.html", {
+        "name": client.name,
+        "surname": client.surname,
+        "id_number": "123456353",
+        "id_date": "20/2/2024",
+        "id_place":"blida",
+        "phone_number": client.phone_number,
+        "personal_phone": client.personal_number,
+        "total": client.total_amount,
+        "payment": "2000",
+        "today_date": datetime.today().strftime('%Y-%m-%d'),
+        "ref": "05",  
+        "year":datetime.today().strftime('%Y'),
+        "logo_url": logo_url,
+    })
+
+    pdf_file = HTML(string=html_content, base_url=request.build_absolute_uri()).write_pdf()
+
+    response = HttpResponse(pdf_file, content_type='application/pdf')
+    response['Content-Disposition'] = f'inline; filename="engagement_{client_id}.pdf"'
+    return response
+
+
+
+
+
+
 
 def generate_pdf(request, client_id):
     client = get_object_or_404(Client, id=client_id)
