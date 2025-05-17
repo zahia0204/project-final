@@ -46,6 +46,7 @@ class Client(models.Model):
     name = models.CharField(max_length=255, default="Unknown")
     surname = models.CharField(max_length=255, default="Unknown")
     phone_number = models.CharField(max_length=15)
+    personal_number = models.CharField(max_length=15, blank=True, null=True)
     client_type = models.CharField(max_length=20, choices=CLIENT_TYPE_CHOICES)
     region = models.CharField(max_length=50, choices=REGION_CHOICES)
     address = models.TextField(max_length=255, default="Unknown")

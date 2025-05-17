@@ -119,7 +119,6 @@ def client_stats(request):
         "Décédé": clients_decede
     }
 
-    # Monthly stats
     changes = DateChange.objects.all()
     regle_changes = changes.filter(new_etat="Payment Réglé").annotate(month=TruncMonth("changed_at")).values("month").annotate(count=Count("id"))
     en_cours_changes = changes.filter(new_etat__in=["Paiement en cours", "En Cours"]).annotate(month=TruncMonth("changed_at")).values("month").annotate(count=Count("id"))
@@ -158,16 +157,14 @@ class ClientImportView(APIView):
         if not file:
             return Response({'error': 'Aucun fichier reçu.'}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Lecture du fichier binaire
+        
         dataset = Dataset()
         xlsx_format = XLSX()
         data = file.read()
 
         try:
-            # Charger le contenu du fichier dans un dataset
             dataset.load(data, format='xlsx')
 
-            # Importer avec la resource
             resource = ClientResource()
             result = resource.import_data(dataset, dry_run=False, raise_errors=True)
             return Response({'success': True, 'imported': len(result.rows)}, status=status.HTTP_200_OK)
