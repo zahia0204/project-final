@@ -5,7 +5,7 @@ from pfe.views import (
     UserViewSet, ClientViewSet, FactureViewSet, 
     DateChangeViewSet, MyTokenObtainPairView , client_history 
 )
-from pfe.views import ClientImportView  
+from pfe.views import ClientImportView , ClientExportView  
 from rest_framework_simplejwt.views import TokenRefreshView
 from project.api.views import get_routes
 from pfe import views 
@@ -25,6 +25,8 @@ urlpatterns = [
     path('generate-pdf/<int:client_id>/', views.generate_pdf, name='generate_pdf'),
     path('api/client-stats/', views.client_stats, name='client_stats'),
     path("import-clients/", ClientImportView.as_view(), name="import-clients"),
+    path("export-clients/", ClientExportView.as_view(), name="export-clients"),
+
 
     
 ]

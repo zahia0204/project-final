@@ -24,29 +24,6 @@ from .serializers import (
 )
 from rest_framework_simplejwt.views import TokenObtainPairView
 
-# ------------------------ Generate PDF ------------------------
-""" def generate_pdf(request, client_id):
-    client = get_object_or_404(Client, id=client_id)
-    logo_url = request.build_absolute_uri('/static/images/pix.png')
-
-    html_content = render_to_string("pdf_template.html", {
-        "name": client.name,
-        "surname": client.surname,
-        "address": client.address,
-        "client_id": client.client_id,
-        "total": client.total_amount,
-        "phone": client.phone_number,
-        "today_date": datetime.today().strftime('%Y-%m-%d'),
-        "ref_number": "05",
-        "year": "2024",
-        'logo_url': logo_url
-    })
-
-    pdf_file = HTML(string=html_content).write_pdf()
-
-    response = HttpResponse(pdf_file, content_type='application/pdf')
-    response['Content-Disposition'] = 'inline; filename="client_warning.pdf"'
-    return response """
 def generate_pdf(request, client_id):
     client = get_object_or_404(Client, id=client_id)
     logo_url = request.build_absolute_uri('/static/images/pix.png')
@@ -70,7 +47,7 @@ def generate_pdf(request, client_id):
     response['Content-Disposition'] = 'inline; filename="client_warning.pdf"'
     return response
 
-# ------------------------ ViewSets ------------------------
+
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -194,6 +171,24 @@ class ClientImportView(APIView):
             resource = ClientResource()
             result = resource.import_data(dataset, dry_run=False, raise_errors=True)
             return Response({'success': True, 'imported': len(result.rows)}, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
+class ClientExportView(APIView):
+    def get(self, request, *args, **kwargs):
+        try:
+            resource = ClientResource()
+            dataset = resource.export()
+            xlsx_format = XLSX()
+            export_data = xlsx_format.export_data(dataset)
+
+            response = HttpResponse(
+                export_data,
+                content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            )
+            response['Content-Disposition'] = 'attachment; filename="clients_export.xlsx"'
+            return response
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

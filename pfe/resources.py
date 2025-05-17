@@ -21,7 +21,7 @@ class SimpleChoiceWidget(widgets.Widget):
             return self.mapping[value]
         raise ValueError(f"Valeur invalide '{value}'. Choix valides: {list(self.choices.keys())}")
 
-    def render(self, value, obj=None):
+    def render(self, value, obj=None , **kwargs):
         return self.choices.get(value, "")
 
 
