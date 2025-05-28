@@ -1,17 +1,16 @@
-# clients/resources.py
+
 from import_export import resources, fields , widgets
 from .models import Client
 from django.contrib.auth.models import User
 
 
-# ✅ Widget personnalisé pour les champs avec choix
 class SimpleChoiceWidget(widgets.Widget):
     def __init__(self, choices):
         self.choices = dict(choices)
         self.mapping = {
             'Corporate Group': 'Corporate',
             'Group Residential': 'Residential',
-            'VIP-AT': 'Corporate',  # Or whatever category fits
+            'VIP-AT': 'Corporate',  
         }
 
     def clean(self, value, row=None, *args, **kwargs):
@@ -30,7 +29,7 @@ class ClientResource(resources.ModelResource):
     name = fields.Field(attribute='name', column_name='FIRST_NAME')
     surname = fields.Field(attribute='surname', column_name='LAST_NAME')
     phone_number = fields.Field(attribute='phone_number', column_name='PRI_IDENTITY')
-    
+    total_amount = fields.Field(attribute='total_amount', column_name='CREANCE_NET')
     client_type = fields.Field(
         attribute='client_type',
         column_name='CUST_LEV1_LIB_CA',
